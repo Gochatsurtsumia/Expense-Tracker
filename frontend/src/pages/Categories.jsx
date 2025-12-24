@@ -71,41 +71,38 @@ const Categories = () => {
   };
 
   if (loading) {
-    return <div style={styles.loading}>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
-    <div style={styles.container}>
+    <div className="page-container">
       {/* Header */}
-      <div style={styles.header}>
+      <div className="header">
         <h1>Expense Tracker</h1>
-        <div style={styles.headerRight}>
-          <span style={styles.username}>Welcome, {user?.name}</span>
-          <button onClick={handleLogout} style={styles.logoutBtn}>
+        <div className="header-right">
+          <span className="username">Welcome, {user?.name}</span>
+          <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>
         </div>
       </div>
 
       {/* Navigation */}
-      <div style={styles.nav}>
-        <Link to="/dashboard" style={styles.navLink}>
+      <nav className="nav">
+        <Link to="/dashboard" className="nav-link">
           Dashboard
         </Link>
-        <Link
-          to="/categories"
-          style={{ ...styles.navLink, ...styles.activeLink }}
-        >
+        <Link to="/categories" className="nav-link active">
           Categories
         </Link>
-        <Link to="/transactions" style={styles.navLink}>
+        <Link to="/transactions" className="nav-link">
           Transactions
         </Link>
-      </div>
+      </nav>
 
       {/* Main Content */}
-      <div style={styles.content}>
-        <div style={styles.contentHeader}>
+      <div className="content">
+        <div className="content-header">
           <h2>Categories</h2>
           <button
             onClick={() => {
@@ -113,20 +110,20 @@ const Categories = () => {
               setEditingId(null);
               setFormData({ name: "", type: "expense" });
             }}
-            style={styles.addBtn}
+            className="btn btn-success"
           >
             {showForm ? "Cancel" : "+ Add Category"}
           </button>
         </div>
 
-        {error && <div style={styles.error}>{error}</div>}
+        {error && <div className="alert alert-error">{error}</div>}
 
         {/* Form */}
         {showForm && (
-          <div style={styles.card}>
+          <div className="card">
             <h3>{editingId ? "Edit Category" : "New Category"}</h3>
-            <form onSubmit={handleSubmit} style={styles.form}>
-              <div style={styles.formGroup}>
+            <form onSubmit={handleSubmit} className="form">
+              <div className="form-group">
                 <label>Name</label>
                 <input
                   type="text"
@@ -135,25 +132,25 @@ const Categories = () => {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
-                  style={styles.input}
+                  className="form-control"
                   placeholder="e.g., Food, Transport, Salary"
                 />
               </div>
-              <div style={styles.formGroup}>
+              <div className="form-group">
                 <label>Type</label>
                 <select
                   value={formData.type}
                   onChange={(e) =>
                     setFormData({ ...formData, type: e.target.value })
                   }
-                  style={styles.input}
+                  className="form-control"
                 >
                   <option value="expense">Expense</option>
                   <option value="income">Income</option>
                   <option value="both">Both</option>
                 </select>
               </div>
-              <button type="submit" style={styles.submitBtn}>
+              <button type="submit" className="btn btn-primary">
                 {editingId ? "Update" : "Create"}
               </button>
             </form>
@@ -161,233 +158,68 @@ const Categories = () => {
         )}
 
         {/* Categories List */}
-        <div style={styles.card}>
+        <div className="card">
           {categories.length === 0 ? (
-            <p style={styles.noData}>
+            <p className="no-data">
               No categories yet. Create one to get started!
             </p>
           ) : (
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>Name</th>
-                  <th style={styles.th}>Type</th>
-                  <th style={styles.th}>Created</th>
-                  <th style={styles.th}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categories.map((category) => (
-                  <tr key={category._id} style={styles.tr}>
-                    <td style={styles.td}>{category.name}</td>
-                    <td style={styles.td}>
-                      <span
-                        style={{
-                          ...styles.badge,
-                          backgroundColor:
-                            category.type === "income"
-                              ? "#d4edda"
-                              : category.type === "expense"
-                              ? "#f8d7da"
-                              : "#d1ecf1",
-                          color:
-                            category.type === "income"
-                              ? "#155724"
-                              : category.type === "expense"
-                              ? "#721c24"
-                              : "#0c5460",
-                        }}
-                      >
-                        {category.type}
-                      </span>
-                    </td>
-                    <td style={styles.td}>
-                      {new Date(category.createdAt).toLocaleDateString()}
-                    </td>
-                    <td style={styles.td}>
-                      <button
-                        onClick={() => handleEdit(category)}
-                        style={styles.editBtn}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(category._id)}
-                        style={styles.deleteBtn}
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <div className="table-container">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Created</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {categories.map((category) => (
+                    <tr key={category._id}>
+                      <td>{category.name}</td>
+                      <td>
+                        <span
+                          className={`badge badge-${
+                            category.type === "income"
+                              ? "income"
+                              : category.type === "expense"
+                              ? "expense"
+                              : "both"
+                          }`}
+                        >
+                          {category.type}
+                        </span>
+                      </td>
+                      <td>
+                        {new Date(category.createdAt).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button
+                            onClick={() => handleEdit(category)}
+                            className="btn btn-sm btn-warning"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(category._id)}
+                            className="btn btn-sm btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "1rem",
-    maxWidth: "1400px",
-    margin: "0 auto",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "2rem",
-    padding: "1rem",
-    backgroundColor: "white",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  headerRight: {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-  },
-  username: {
-    fontWeight: "500",
-  },
-  logoutBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#dc3545",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  nav: {
-    display: "flex",
-    gap: "1rem",
-    marginBottom: "2rem",
-    padding: "1rem",
-    backgroundColor: "white",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  navLink: {
-    padding: "0.5rem 1rem",
-    textDecoration: "none",
-    color: "#007bff",
-    borderRadius: "4px",
-  },
-  activeLink: {
-    backgroundColor: "#007bff",
-    color: "white",
-  },
-  content: {
-    backgroundColor: "white",
-    padding: "2rem",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  contentHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "2rem",
-  },
-  addBtn: {
-    padding: "0.75rem 1.5rem",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
-  card: {
-    backgroundColor: "#f8f9fa",
-    padding: "1.5rem",
-    borderRadius: "8px",
-    marginBottom: "1.5rem",
-  },
-  form: {
-    marginTop: "1rem",
-  },
-  formGroup: {
-    marginBottom: "1rem",
-  },
-  input: {
-    width: "100%",
-    padding: "0.5rem",
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "1rem",
-    marginTop: "0.25rem",
-  },
-  submitBtn: {
-    padding: "0.75rem 1.5rem",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  th: {
-    textAlign: "left",
-    padding: "1rem",
-    borderBottom: "2px solid #dee2e6",
-    fontWeight: "600",
-  },
-  tr: {
-    borderBottom: "1px solid #dee2e6",
-  },
-  td: {
-    padding: "1rem",
-  },
-  badge: {
-    padding: "0.25rem 0.75rem",
-    borderRadius: "12px",
-    fontSize: "0.875rem",
-    fontWeight: "500",
-  },
-  editBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#ffc107",
-    color: "#000",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    marginRight: "0.5rem",
-  },
-  deleteBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#dc3545",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  error: {
-    backgroundColor: "#f8d7da",
-    color: "#721c24",
-    padding: "1rem",
-    borderRadius: "4px",
-    marginBottom: "1rem",
-  },
-  noData: {
-    textAlign: "center",
-    color: "#666",
-    padding: "2rem",
-  },
-  loading: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    fontSize: "1.5rem",
-  },
 };
 
 export default Categories;

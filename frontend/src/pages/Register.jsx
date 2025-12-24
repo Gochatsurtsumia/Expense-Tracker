@@ -28,32 +28,32 @@ const Register = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
+    <div className="auth-container">
+      <div className="auth-card">
         <h2>Register</h2>
-        {error && <div style={styles.error}>{error}</div>}
+        {error && <div className="alert alert-error">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              style={styles.input}
+              className="form-control"
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={styles.input}
+              className="form-control"
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Password</label>
             <input
               type="password"
@@ -61,69 +61,19 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength="6"
-              style={styles.input}
+              className="form-control"
             />
           </div>
-          <button type="submit" disabled={loading} style={styles.button}>
+          <button type="submit" disabled={loading} className="btn btn-success">
             {loading ? "Creating account..." : "Register"}
           </button>
         </form>
-        <p style={styles.text}>
+        <p className="auth-text">
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    backgroundColor: "#f5f5f5",
-  },
-  card: {
-    backgroundColor: "white",
-    padding: "2rem",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    width: "100%",
-    maxWidth: "400px",
-  },
-  formGroup: {
-    marginBottom: "1rem",
-  },
-  input: {
-    width: "100%",
-    padding: "0.5rem",
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    fontSize: "1rem",
-    boxSizing: "border-box",
-  },
-  button: {
-    width: "100%",
-    padding: "0.75rem",
-    backgroundColor: "#28a745",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    fontSize: "1rem",
-    cursor: "pointer",
-  },
-  error: {
-    backgroundColor: "#f8d7da",
-    color: "#721c24",
-    padding: "0.75rem",
-    borderRadius: "4px",
-    marginBottom: "1rem",
-  },
-  text: {
-    textAlign: "center",
-    marginTop: "1rem",
-  },
 };
 
 export default Register;

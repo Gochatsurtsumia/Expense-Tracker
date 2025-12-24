@@ -53,60 +53,60 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div style={styles.loading}>Loading dashboard...</div>;
+    return <div className="loading">Loading dashboard...</div>;
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
   return (
-    <div style={styles.container}>
+    <div className="page-container">
       {/* Header */}
-      <div style={styles.header}>
+      <div className="header">
         <h1>Expense Tracker</h1>
-        <div style={styles.headerRight}>
-          <span style={styles.username}>Welcome, {user?.name}</span>
-          <button onClick={handleLogout} style={styles.logoutBtn}>
+        <div className="header-right">
+          <span className="username">Welcome, {user?.name}</span>
+          <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>
         </div>
       </div>
 
       {/* Navigation */}
-      <div style={styles.nav}>
-        <Link to="/dashboard" style={styles.navLink}>
+      <nav className="nav">
+        <Link to="/dashboard" className="nav-link active">
           Dashboard
         </Link>
-        <Link to="/categories" style={styles.navLink}>
+        <Link to="/categories" className="nav-link">
           Categories
         </Link>
-        <Link to="/transactions" style={styles.navLink}>
+        <Link to="/transactions" className="nav-link">
           Transactions
         </Link>
-      </div>
+      </nav>
 
       {/* Summary Cards */}
-      <div style={styles.summaryGrid}>
-        <div style={{ ...styles.card, ...styles.incomeCard }}>
+      <div className="summary-grid">
+        <div className="summary-card income">
           <h3>Total Income</h3>
-          <p style={styles.amount}>${summary?.totalIncome || 0}</p>
+          <p className="amount">${summary?.totalIncome || 0}</p>
           <small>{summary?.incomeCount || 0} transactions</small>
         </div>
-        <div style={{ ...styles.card, ...styles.expenseCard }}>
+        <div className="summary-card expense">
           <h3>Total Expenses</h3>
-          <p style={styles.amount}>${summary?.totalExpense || 0}</p>
+          <p className="amount">${summary?.totalExpense || 0}</p>
           <small>{summary?.expenseCount || 0} transactions</small>
         </div>
-        <div style={{ ...styles.card, ...styles.savingsCard }}>
+        <div className="summary-card savings">
           <h3>Net Savings</h3>
-          <p style={styles.amount}>${summary?.netSavings || 0}</p>
+          <p className="amount">${summary?.netSavings || 0}</p>
           <small>Income - Expenses</small>
         </div>
       </div>
 
       {/* Charts */}
-      <div style={styles.chartsGrid}>
+      <div className="charts-grid">
         {/* Spending by Category */}
-        <div style={styles.card}>
+        <div className="chart-card">
           <h3>Spending by Category</h3>
           {categoryData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -131,12 +131,12 @@ const Dashboard = () => {
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p style={styles.noData}>No expense data available</p>
+            <p className="no-data">No expense data available</p>
           )}
         </div>
 
         {/* Monthly Trend */}
-        <div style={styles.card}>
+        <div className="chart-card">
           <h3>Monthly Trend</h3>
           {trendData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
@@ -167,105 +167,12 @@ const Dashboard = () => {
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p style={styles.noData}>No trend data available</p>
+            <p className="no-data">No trend data available</p>
           )}
         </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "1rem",
-    maxWidth: "1400px",
-    margin: "0 auto",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "2rem",
-    padding: "1rem",
-    backgroundColor: "white",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  headerRight: {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-  },
-  username: {
-    fontWeight: "500",
-  },
-  logoutBtn: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#dc3545",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  nav: {
-    display: "flex",
-    gap: "1rem",
-    marginBottom: "2rem",
-    padding: "1rem",
-    backgroundColor: "white",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  navLink: {
-    padding: "0.5rem 1rem",
-    textDecoration: "none",
-    color: "#007bff",
-    borderRadius: "4px",
-    transition: "background-color 0.2s",
-  },
-  summaryGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "1rem",
-    marginBottom: "2rem",
-  },
-  card: {
-    backgroundColor: "white",
-    padding: "1.5rem",
-    borderRadius: "8px",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  },
-  incomeCard: {
-    borderLeft: "4px solid #00C49F",
-  },
-  expenseCard: {
-    borderLeft: "4px solid #FF8042",
-  },
-  savingsCard: {
-    borderLeft: "4px solid #0088FE",
-  },
-  amount: {
-    fontSize: "2rem",
-    fontWeight: "bold",
-    margin: "0.5rem 0",
-  },
-  chartsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-    gap: "1rem",
-  },
-  loading: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    fontSize: "1.5rem",
-  },
-  noData: {
-    textAlign: "center",
-    color: "#666",
-    padding: "2rem",
-  },
 };
 
 export default Dashboard;
