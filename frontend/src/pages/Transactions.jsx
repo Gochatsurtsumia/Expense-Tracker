@@ -109,41 +109,38 @@ const Transactions = () => {
   );
 
   if (loading) {
-    return <div style={styles.loading}>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
-    <div style={styles.container}>
+    <div className="page-container">
       {/* Header */}
-      <div style={styles.header}>
+      <div className="header">
         <h1>Expense Tracker</h1>
-        <div style={styles.headerRight}>
-          <span style={styles.username}>Welcome, {user?.name}</span>
-          <button onClick={handleLogout} style={styles.logoutBtn}>
+        <div className="header-right">
+          <span className="username">Welcome, {user?.name}</span>
+          <button onClick={handleLogout} className="logout-btn">
             Logout
           </button>
         </div>
       </div>
 
       {/* Navigation */}
-      <div style={styles.nav}>
-        <Link to="/dashboard" style={styles.navLink}>
+      <nav className="nav">
+        <Link to="/dashboard" className="nav-link">
           Dashboard
         </Link>
-        <Link to="/categories" style={styles.navLink}>
+        <Link to="/categories" className="nav-link">
           Categories
         </Link>
-        <Link
-          to="/transactions"
-          style={{ ...styles.navLink, ...styles.activeLink }}
-        >
+        <Link to="/transactions" className="nav-link active">
           Transactions
         </Link>
-      </div>
+      </nav>
 
       {/* Main Content */}
-      <div style={styles.content}>
-        <div style={styles.contentHeader}>
+      <div className="content">
+        <div className="content-header">
           <h2>Transactions</h2>
           <button
             onClick={() => {
@@ -157,40 +154,36 @@ const Transactions = () => {
                 description: "",
               });
             }}
-            style={styles.addBtn}
+            className="btn btn-primary"
           >
             {showForm ? "Cancel" : "+ Add Transaction"}
           </button>
         </div>
 
-        {error && <div style={styles.error}>{error}</div>}
+        {error && <div className="alert alert-error">{error}</div>}
 
         {/* Filters */}
-        <div style={styles.card}>
+        <div className="card">
           <h3>Filters</h3>
-          <div style={styles.filterGrid}>
-            <div style={styles.formGroup}>
+          <div className="filter-grid">
+            <div className="form-group">
               <label>Type</label>
               <select
                 value={filters.type}
-                onChange={(e) =>
-                  setFilters({ ...filters, type: e.target.value })
-                }
-                style={styles.input}
+                onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+                className="form-control"
               >
                 <option value="">All</option>
                 <option value="income">Income</option>
                 <option value="expense">Expense</option>
               </select>
             </div>
-            <div style={styles.formGroup}>
+            <div className="form-group">
               <label>Category</label>
               <select
                 value={filters.category}
-                onChange={(e) =>
-                  setFilters({ ...filters, category: e.target.value })
-                }
-                style={styles.input}
+                onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                className="form-control"
               >
                 <option value="">All Categories</option>
                 {categories.map((cat) => (
@@ -201,7 +194,7 @@ const Transactions = () => {
               </select>
             </div>
             <div style={{ display: "flex", alignItems: "flex-end" }}>
-              <button onClick={handleFilter} style={styles.filterBtn}>
+              <button onClick={handleFilter} className="filter-btn">
                 Apply Filters
               </button>
             </div>
@@ -210,51 +203,43 @@ const Transactions = () => {
 
         {/* Form */}
         {showForm && (
-          <div style={styles.card}>
+          <div className="card">
             <h3>{editingId ? "Edit Transaction" : "New Transaction"}</h3>
-            <form onSubmit={handleSubmit} style={styles.form}>
-              <div style={styles.formGrid}>
-                <div style={styles.formGroup}>
+            <form onSubmit={handleSubmit} className="form">
+              <div className="form-grid">
+                <div className="form-group">
                   <label>Type</label>
                   <select
                     value={formData.type}
                     onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        type: e.target.value,
-                        category: "",
-                      })
+                      setFormData({ ...formData, type: e.target.value, category: "" })
                     }
-                    style={styles.input}
+                    className="form-control"
                     required
                   >
                     <option value="expense">Expense</option>
                     <option value="income">Income</option>
                   </select>
                 </div>
-                <div style={styles.formGroup}>
+                <div className="form-group">
                   <label>Amount</label>
                   <input
                     type="number"
                     step="0.01"
                     min="0.01"
                     value={formData.amount}
-                    onChange={(e) =>
-                      setFormData({ ...formData, amount: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                     required
-                    style={styles.input}
+                    className="form-control"
                     placeholder="0.00"
                   />
                 </div>
-                <div style={styles.formGroup}>
+                <div className="form-group">
                   <label>Category</label>
                   <select
                     value={formData.category}
-                    onChange={(e) =>
-                      setFormData({ ...formData, category: e.target.value })
-                    }
-                    style={styles.input}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="form-control"
                     required
                   >
                     <option value="">Select category</option>
@@ -265,32 +250,28 @@ const Transactions = () => {
                     ))}
                   </select>
                 </div>
-                <div style={styles.formGroup}>
+                <div className="form-group">
                   <label>Date</label>
                   <input
                     type="date"
                     value={formData.date}
-                    onChange={(e) =>
-                      setFormData({ ...formData, date: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                     required
-                    style={styles.input}
+                    className="form-control"
                   />
                 </div>
               </div>
-              <div style={styles.formGroup}>
+              <div className="form-group">
                 <label>Description (Optional)</label>
                 <input
                   type="text"
                   value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  style={styles.input}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  className="form-control"
                   placeholder="e.g., Lunch at restaurant"
                 />
               </div>
-              <button type="submit" style={styles.submitBtn}>
+              <button type="submit" className="btn btn-primary">
                 {editingId ? "Update" : "Create"}
               </button>
             </form>
@@ -298,98 +279,76 @@ const Transactions = () => {
         )}
 
         {/* Transactions List */}
-        <div style={styles.card}>
+        <div className="card">
           {transactions.length === 0 ? (
-            <p style={styles.noData}>
-              No transactions yet. Create one to get started!
-            </p>
+            <p className="no-data">No transactions yet. Create one to get started!</p>
           ) : (
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>Date</th>
-                  <th style={styles.th}>Type</th>
-                  <th style={styles.th}>Category</th>
-                  <th style={styles.th}>Description</th>
-                  <th style={styles.th}>Amount</th>
-                  <th style={styles.th}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                  <tr key={transaction._id} style={styles.tr}>
-                    <td style={styles.td}>
-                      {new Date(transaction.date).toLocaleDateString()}
-                    </td>
-                    <td style={styles.td}>
-                      <span
-                        style={{
-                          ...styles.badge,
-                          backgroundColor:
-                            transaction.type === "income"
-                              ? "#d4edda"
-                              : "#f8d7da",
-                          color:
-                            transaction.type === "income"
-                              ? "#155724"
-                              : "#721c24",
-                        }}
-                      >
-                        {transaction.type}
-                      </span>
-                    </td>
-                    <td style={styles.td}>{transaction.category.name}</td>
-                    <td style={styles.td}>{transaction.description || "-"}</td>
-                    <td
-                      style={{
-                        ...styles.td,
-                        fontWeight: "bold",
-                        color:
-                          transaction.type === "income" ? "#28a745" : "#dc3545",
-                      }}
-                    >
-                      {transaction.type === "income" ? "+" : "-"}$
-                      {transaction.amount}
-                    </td>
-                    <td style={styles.td}>
-                      <button
-                        onClick={() => handleEdit(transaction)}
-                        style={styles.editBtn}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(transaction._id)}
-                        style={styles.deleteBtn}
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <div className="table-container">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {transactions.map((transaction) => (
+                    <tr key={transaction._id}>
+                      <td>{new Date(transaction.date).toLocaleDateString()}</td>
+                      <td>
+                        <span className={`badge badge-${transaction.type}`}>
+                          {transaction.type}
+                        </span>
+                      </td>
+                      <td>{transaction.category.name}</td>
+                      <td>{transaction.description || "-"}</td>
+                      <td className={transaction.type === "income" ? "text-success font-mono font-bold" : "text-danger font-mono font-bold"}>
+                        {transaction.type === "income" ? "+" : "-"}${transaction.amount}
+                      </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button
+                            onClick={() => handleEdit(transaction)}
+                            className="btn btn-ghost btn-sm"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(transaction._id)}
+                            className="btn btn-danger btn-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
         {/* Summary */}
         {transactions.length > 0 && (
-          <div style={styles.summary}>
-            <div style={styles.summaryItem}>
-              <strong>Total Income:</strong>{" "}
-              <span style={{ color: "#28a745" }}>
-                +$
-                {transactions
+          <div className="transaction-summary">
+            <div className="summary-item">
+              <strong>Total Income:</strong>
+              <span className="income-amount">
+                +${transactions
                   .filter((t) => t.type === "income")
                   .reduce((sum, t) => sum + t.amount, 0)
                   .toFixed(2)}
               </span>
             </div>
-            <div style={styles.summaryItem}>
-              <strong>Total Expenses:</strong>{" "}
-              <span style={{ color: "#dc3545" }}>
-                -$
-                {transactions
+            <div className="summary-item">
+              <strong>Total Expenses:</strong>
+              <span className="expense-amount">
+                -${transactions
                   .filter((t) => t.type === "expense")
                   .reduce((sum, t) => sum + t.amount, 0)
                   .toFixed(2)}
